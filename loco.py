@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
+
 import heapq
 import sys
 
 
-class LogFile(object):
+class LogFile:
     def __init__(self, filename):
         self.filename = filename
         self.f = open(filename)
@@ -16,7 +18,7 @@ class LogFile(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         try:
             line = next(self.f)
         except StopIteration:
@@ -36,7 +38,7 @@ class LogFile(object):
         return " ".join((parts[0], parts[1]))
 
 
-class LoCo(object):
+class LoCo:
     """Combine sorted log files into a single stream"""
     def __init__(self, filenames, logfile_class=LogFile):
         self.files = [logfile_class(filename) for filename in filenames]
@@ -45,7 +47,7 @@ class LoCo(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         """Return the next line of combined log files"""
         if not self.files:
             raise StopIteration()
